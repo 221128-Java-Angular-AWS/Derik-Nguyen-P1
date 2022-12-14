@@ -50,7 +50,7 @@ public class ConnectionManager {
             builder.append("&password=");
             builder.append(props.getProperty("password"));
 
-            System.out.println(builder.toString());
+            //System.out.println(builder.toString());
 
             Class.forName(props.getProperty("driver"));
 
