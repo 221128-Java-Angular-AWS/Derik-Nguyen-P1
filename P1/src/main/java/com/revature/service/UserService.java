@@ -1,5 +1,7 @@
 package com.revature.service;
 
+import com.revature.exceptions.IncorrectPasswordException;
+import com.revature.exceptions.UserNotFoundException;
 import com.revature.persistence.UserDao;
 import com.revature.pojos.User;
 
@@ -19,4 +21,15 @@ public class UserService {
         return dao.getAllUsers();
     }
 
+    public User authenticate(String username, String password) throws UserNotFoundException, IncorrectPasswordException {
+        return dao.authenticate(username, password);
+    }
+
+    public void update(User user) {
+        dao.update(user);
+    }
+
+    public void delete(User user) {
+        dao.delete(user);
+    }
 }

@@ -24,7 +24,7 @@ public class User {
         this.isManager = isManager;
     }
 
-    public User(String firstName, String lastName, String username, String password, String title){
+    public User(String firstName, String lastName, String username, String password, Boolean isManager){
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -59,11 +59,11 @@ public class User {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
-    public Boolean getManager() {
+    public Boolean getIsManager() {
         return isManager;
     }
 
-    public void setManager(Boolean manager) {
+    public void setIsManager(Boolean manager) {
         isManager = manager;
     }
 

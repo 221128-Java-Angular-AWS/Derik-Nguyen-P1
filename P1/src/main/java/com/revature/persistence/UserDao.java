@@ -18,13 +18,14 @@ public class UserDao {
     }
 
     public void create(User user){
-        String sql = "INSERT INTO users (first_name, last_name, username, password) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO users (first_name, last_name, username, \"password\", is_manager) VALUES (?,?,?,?,?);";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, user.getFirstName());
             pstmt.setString(2, user.getLastName());
             pstmt.setString(3, user.getUsername());
             pstmt.setString(4, user.getPassword());
+            pstmt.setBoolean(5, user.getIsManager());
 
             pstmt.executeUpdate();
 
@@ -62,7 +63,7 @@ public class UserDao {
 
     }
     public void update(User user){
-        String sql = "UPDATE USERS SET first_name = ?, last_name = ?, username = ?, password = ? WHERE user_id = ?;";
+        String sql = "UPDATE USERS SET first_name = ?, last_name = ?, username = ?, \"password\" = ? WHERE user_id = ?;";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, user.getFirstName());
@@ -83,8 +84,8 @@ public class UserDao {
             ResultSet rs = pstmt.executeQuery();
             Set<User> setUsers = new HashSet<>();
             while (rs.next()){
-                User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
-                        rs.getString("password"), rs.getBoolean("isManager"));
+                User user = new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
+                        rs.getString("password"), rs.getBoolean("is_manager"));
                 setUsers.add(user);
             }
             return setUsers;
@@ -94,7 +95,7 @@ public class UserDao {
         return null;
     }
     public void delete(User user){
-        String sql = "DELETE FROM users WHERE USER_ID = ?";
+        String sql = "DELETE FROM users WHERE USER_ID = ?;";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, user.getUserId());

@@ -33,13 +33,13 @@ public class TicketDao {
         }
     }
 
-    public Ticket read(Integer id) {
+    public Ticket read(Integer ticket_id) {
         Ticket ticket = new Ticket();
 
         try {
-            String sql = "SELECT * FROM ticket WHERE ticket_id = ?";
+            String sql = "SELECT * FROM ticket WHERE ticket_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, ticket_id);
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()) {
@@ -60,7 +60,7 @@ public class TicketDao {
 
     public void update(Ticket ticket) {
         try {
-            String sql = "UPDATE tasks SET pending_status = ?, approved = ?";
+            String sql = "UPDATE tasks SET pending_status = ?, approved = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setBoolean(1, ticket.getPendingStatus());
             pstmt.setBoolean(2, ticket.getApproved());
@@ -72,11 +72,11 @@ public class TicketDao {
         }
     }
 
-    public void delete(Integer id) {
+    public void delete(Integer ticket_id) {
         try {
-            String sql = "DELETE FROM tickets WHERE task_id = ?";
+            String sql = "DELETE FROM tickets WHERE ticket_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, ticket_id);
             pstmt.executeUpdate();
 
 

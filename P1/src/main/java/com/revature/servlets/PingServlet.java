@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class pingServlet extends HttpServlet {
+public class PingServlet extends HttpServlet {
     /*
     This will take a simple GET request and respond with "Pong!" and status 202, indicating the request was accepted.
      */

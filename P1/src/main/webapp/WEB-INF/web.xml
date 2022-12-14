@@ -18,16 +18,24 @@
     </listener>
 
     <servlet>
-        <servlet-name>pingServlet</servlet-name>
-        <servlet-class>com.revature.servlets.pingServlet</servlet-class>
+        <servlet-name>PingServlet</servlet-name>
+        <servlet-class>com.revature.servlets.PingServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>pingServlet</servlet-name>
+        <servlet-name>PingServlet</servlet-name>
         <url-pattern>/ping</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.revature.servlets.UserServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
 </web-app>
 
 
