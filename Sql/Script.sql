@@ -31,7 +31,7 @@ select * from users;
 select * from tickets;
 select * from users where is_manager = true;
 
-insert into users (first_name, last_name, username, "password") values ('derik', 'nguyen', 'derjljog,edu', 'password1');
+insert into users (first_name, last_name, username, "password") values ('dpaul', 'ngiu', 'derjljog,edu', 'password1');
 insert into users (first_name, last_name, username, "password", is_manager) values ('jimmy', 'beans', 'edisone@eagle.edu', 'avemaria1', true); 
 insert into users (first_name, last_name, username, "password") values ('kelvin', 'samsara', 'derjoohu,edu', 'password1');
 insert into users (first_name, last_name, username, "password", is_manager) values ('timmy', 'beans', 'edison56agle.edu', 'avemaria1', true);
@@ -57,7 +57,7 @@ where manager_id = 4;
  
 
 select first_name, last_name from users 
-where username = 'derik.nguyen@wsu,edu'
+where username = 'gjreuej@psu,edu'
 
 
 
