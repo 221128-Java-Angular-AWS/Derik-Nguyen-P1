@@ -1,6 +1,6 @@
 
 drop table if exists users;
-drop table if exists ticket;
+drop table if exists tickets;
 
 
 
@@ -16,7 +16,7 @@ create table if not exists users (
 
 
 
-create table if not exists ticket (
+create table if not exists tickets (
 	id SERIAL primary key,
 	employee_id INT,
 	manager_id INT,
@@ -26,20 +26,38 @@ create table if not exists ticket (
 	approved boolean default null
 );
 
+select * from users where username = 'edisone@eagle.edu' and "password" = 'avemaria1';
 select * from users;
+select * from tickets;
+select * from users where is_manager = true;
 
-insert into users (username, "password") values ('derik.nguyen@wsu,edu', 'password1');
-insert into users (username, "password", is_manager) values ('edisone@eagle.edu', 'avemaria1', true); 
+insert into users (first_name, last_name, username, "password") values ('derik', 'nguyen', 'derjljog,edu', 'password1');
+insert into users (first_name, last_name, username, "password", is_manager) values ('jimmy', 'beans', 'edisone@eagle.edu', 'avemaria1', true); 
+insert into users (first_name, last_name, username, "password") values ('kelvin', 'samsara', 'derjoohu,edu', 'password1');
+insert into users (first_name, last_name, username, "password", is_manager) values ('timmy', 'beans', 'edison56agle.edu', 'avemaria1', true);
 
-insert into ticket (employee_id, manager_id, description, request_amount, pending_status) values (1, 2,'gjhfjgh', 10000.09, true);
 
-update ticket 
-set approved = true
-where employee_id = 1 and manager_id = 1;
 
-select * from ticket t
-join users u on t.manager_id = u.id; 
+insert into tickets (employee_id, manager_id, description, request_amount, pending_status) values (1, 2,'This is a test', 108000.01, true);
+insert into tickets (employee_id, manager_id, description, request_amount, pending_status) values (1, 4,'This is a test', 178000.01, true);
 
+select * from tickets t
+join users u on t.manager_id = u.id
+join users ue on t.employee_id = ue.id;
+
+
+update tickets 
+set approved = true, pending_status = default
+where manager_id = 2;
+
+update tickets 
+set approved = false, pending_status = default
+where manager_id = 4;
+
+ 
+
+select first_name, last_name from users 
+where username = 'derik.nguyen@wsu,edu'
 
 
 

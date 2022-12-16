@@ -17,7 +17,7 @@ public class TicketDao {
 
     public void create(Ticket ticket) {
         try {
-            String sql = "INSERT INTO tickets (ticketId, employeeId, managerId, description, requestAmount, pendingStatus,approved) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO ticket (ticketId, employeeId, managerId, description, requestAmount, pendingStatus,approved) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, ticket.getTicketId());
             pstmt.setInt(2, ticket.getManagerId());
@@ -59,8 +59,10 @@ public class TicketDao {
     }
 
     public void update(Ticket ticket) {
+
+
         try {
-            String sql = "UPDATE tasks SET pending_status = ?, approved = ?;";
+            String sql = "UPDATE ticket SET pending_status = ?, approved = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setBoolean(1, ticket.getPendingStatus());
             pstmt.setBoolean(2, ticket.getApproved());
@@ -74,7 +76,7 @@ public class TicketDao {
 
     public void delete(Integer ticket_id) {
         try {
-            String sql = "DELETE FROM tickets WHERE ticket_id = ?;";
+            String sql = "DELETE FROM ticket WHERE ticket_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, ticket_id);
             pstmt.executeUpdate();

@@ -33,8 +33,8 @@ public class UserDao {
             ResultSet rs = pstmt.getGeneratedKeys();
 
             if(rs.next()){
-                user.setUserId(rs.getInt("user_id"));
-                System.out.println("User ID here "+ user.getUserId());
+                user.setUserId(rs.getInt("id"));
+                //System.out.println("User ID here "+ user.getUserId());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

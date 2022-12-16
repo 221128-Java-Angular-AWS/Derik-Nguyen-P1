@@ -27,6 +27,9 @@ public class Ticket {
     public Integer getTicketId() {
         return ticketId;
     }
+    public void setTicketId(Integer ticketId) {
+        this.ticketId = ticketId;
+    }
 
     public Integer getEmployeeId() {
         return employeeId;
@@ -76,9 +79,7 @@ public class Ticket {
         this.approved = approved;
     }
 
-    public void setTicketId(Integer ticketId) {
-        this.ticketId = ticketId;
-    }
+
 
     @Override
     public String toString() {
