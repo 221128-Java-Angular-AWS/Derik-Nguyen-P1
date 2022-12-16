@@ -15,21 +15,22 @@ import java.util.Set;
 
 public class UserServlet extends HttpServlet {
     private UserService service;
+     private ObjectMapper mapper;
 
     @Override
     public void init() throws ServletException {
         this.service = new UserService(new UserDao());
+        this.mapper = new ObjectMapper();
     }
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Set<User> users = service.getAllUsers();
-
-        ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(users);
         //resp.setStatus(200);
         resp.getWriter().println(json);
+
     }
 
 

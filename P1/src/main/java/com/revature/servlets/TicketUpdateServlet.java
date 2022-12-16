@@ -3,7 +3,6 @@ package com.revature.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.persistence.TicketDao;
 import com.revature.pojos.Ticket;
-import com.revature.pojos.User;
 import com.revature.service.TicketService;
 
 import javax.servlet.ServletException;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class TicketServlet extends HttpServlet {
+public class TicketUpdateServlet extends HttpServlet {
     private TicketService service;
     private ObjectMapper mapper;
     //private StringBuilder jsonBuilder;
@@ -27,31 +26,7 @@ public class TicketServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer id = Integer.parseInt(req.getParameter("ticket_id"));
-        Ticket ticket = service.getTicket(id);
-        String json = mapper.writeValueAsString(ticket);
-
-        resp.getWriter().println(json);
-        resp.setStatus(200);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BufferedReader reader = req.getReader();
-        StringBuilder json = new StringBuilder();
-        while(reader.ready()) {
-            json.append(reader.readLine());
-        }
-
-        Ticket ticket = mapper.readValue(json.toString(), Ticket.class);
-        service.createNewTicket(ticket);
-
-        resp.setStatus(201);
-    }
-/*
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
         StringBuilder json = new StringBuilder();
         while(reader.ready()) {
@@ -62,13 +37,5 @@ public class TicketServlet extends HttpServlet {
         service.updateTicket(ticket);
 
         resp.setStatus(201);
-    }
-*/
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer id = Integer.parseInt(req.getParameter("ticket_id"));
-        service.deleteTicket(id);
-
-        resp.setStatus(200);
     }
 }

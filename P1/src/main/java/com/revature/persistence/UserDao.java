@@ -33,7 +33,7 @@ public class UserDao {
             ResultSet rs = pstmt.getGeneratedKeys();
 
             if(rs.next()){
-                user.setUserId(rs.getInt("id"));
+                user.setUserId(rs.getInt("user_id"));
                 //System.out.println("User ID here "+ user.getUserId());
             }
         } catch (SQLException e) {
@@ -52,7 +52,7 @@ public class UserDao {
                 throw new UserNotFoundException("This username does not exist in our database");
             }
             User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
-                    rs.getString("password"), rs.getBoolean("isManager"));
+                    rs.getString("password"), rs.getBoolean("is_manager"));
             if (password.equals(user.getPassword())){
                 return user;
             }
@@ -84,7 +84,7 @@ public class UserDao {
             ResultSet rs = pstmt.executeQuery();
             Set<User> setUsers = new HashSet<>();
             while (rs.next()){
-                User user = new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
+                User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
                         rs.getString("password"), rs.getBoolean("is_manager"));
                 setUsers.add(user);
             }

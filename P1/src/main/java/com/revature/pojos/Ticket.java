@@ -24,12 +24,22 @@ public class Ticket {
         this.approved = approved;
     }
 
-    public Integer getTicketId() {
-        return ticketId;
+    public Ticket(Integer employeeId, Integer managerId, String description, Double requestAmount, Boolean pendingStatus) {
+        this.employeeId = employeeId;
+        this.managerId = managerId;
+        this.description = description;
+        this.requestAmount = requestAmount;
+        this.pendingStatus = pendingStatus;
     }
-    public void setTicketId(Integer ticketId) {
+
+    public Ticket(Integer ticketId, Boolean approved) {
         this.ticketId = ticketId;
+        this.approved = approved;
     }
+
+    public Integer getTicketId() { return ticketId; }
+
+    public void setTicketId(Integer ticketId) { this.ticketId = ticketId; }
 
     public Integer getEmployeeId() {
         return employeeId;
@@ -78,7 +88,6 @@ public class Ticket {
     public void setApproved(Boolean approved) {
         this.approved = approved;
     }
-
 
 
     @Override

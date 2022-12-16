@@ -3,7 +3,7 @@ package com.revature.pojos;
 import java.util.HashMap;
 import java.util.Objects;
 public class User {
-    private int userId;
+    private Integer userId;
     private String firstName;
     private String lastName;
     private String username;
@@ -15,7 +15,7 @@ public class User {
     public User(){
     }
 
-    public User(int userId, String firstName, String lastName, String username, String password, Boolean isManager){
+    public User(Integer userId, String firstName, String lastName, String username, String password, Boolean isManager){
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,10 +32,10 @@ public class User {
         this.isManager = isManager;
     }
 
-    public int getUserId(){
+    public Integer getUserId(){
         return this.userId;
     }
-    public void setUserId(int userId){
+    public void setUserId(Integer userId){
         this.userId = userId;
     }
     public String getFirstName() {

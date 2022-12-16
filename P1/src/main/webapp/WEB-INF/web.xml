@@ -38,6 +38,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>TicketServlet</servlet-name>
+        <servlet-class>com.revature.servlets.TicketServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TicketServlet</servlet-name>
+        <url-pattern>/tickets</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AuthenticateServlet</servlet-name>
         <servlet-class>com.revature.servlets.AuthenticateServlet</servlet-class>
     </servlet>
@@ -45,6 +55,16 @@
     <servlet-mapping>
         <servlet-name>AuthenticateServlet</servlet-name>
         <url-pattern>/authenticate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TicketUpdateServlet</servlet-name>
+        <servlet-class>com.revature.servlets.TicketUpdateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TicketUpdateServlet</servlet-name>
+        <url-pattern>/update</url-pattern>
     </servlet-mapping>
 
 

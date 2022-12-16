@@ -25,6 +25,11 @@ public class UserService {
         return dao.authenticate(username, password);
     }
 
+    public User authenticate(User user) throws UserNotFoundException, IncorrectPasswordException {
+        return dao.authenticate(user.getUsername(), user.getPassword());
+    }
+
+
     public void update(User user) {
         dao.update(user);
     }

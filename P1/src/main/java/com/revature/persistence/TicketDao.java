@@ -17,14 +17,14 @@ public class TicketDao {
 
     public void create(Ticket ticket) {
         try {
-            String sql = "INSERT INTO ticket (ticketId, employeeId, managerId, description, requestAmount, pendingStatus,approved) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO tickets (employee_id, manager_id, description, request_amount, pending_status) VALUES (?,?,?,?,?);";
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1, ticket.getTicketId());
+            pstmt.setInt(1, ticket.getEmployeeId());
             pstmt.setInt(2, ticket.getManagerId());
-            pstmt.setInt(3, ticket.getEmployeeId());
-            pstmt.setString(4, ticket.getDescription());
+            pstmt.setString(3, ticket.getDescription());
+            pstmt.setDouble(4, ticket.getRequestAmount());
             pstmt.setBoolean(5, ticket.getPendingStatus());
-            pstmt.setBoolean(6, ticket.getApproved());
+
 
             pstmt.executeUpdate();
 
@@ -37,7 +37,7 @@ public class TicketDao {
         Ticket ticket = new Ticket();
 
         try {
-            String sql = "SELECT * FROM ticket WHERE ticket_id = ?;";
+            String sql = "SELECT * FROM tickets WHERE ticket_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, ticket_id);
             ResultSet rs = pstmt.executeQuery();
@@ -59,13 +59,15 @@ public class TicketDao {
     }
 
     public void update(Ticket ticket) {
-
+        //if statement to check if you are the manager to update
 
         try {
-            String sql = "UPDATE ticket SET pending_status = ?, approved = ?;";
+            String sql = "UPDATE tickets SET approved = ?, pending_status = DEFAULT WHERE ticket_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setBoolean(1, ticket.getPendingStatus());
-            pstmt.setBoolean(2, ticket.getApproved());
+            pstmt.setBoolean(1, ticket.getApproved());
+            pstmt.setInt(2, ticket.getTicketId());
+            //pstmt.setBoolean(2, ticket.getPendingStatus());
+
 
             pstmt.executeUpdate();
 
@@ -76,7 +78,7 @@ public class TicketDao {
 
     public void delete(Integer ticket_id) {
         try {
-            String sql = "DELETE FROM ticket WHERE ticket_id = ?;";
+            String sql = "DELETE FROM tickets WHERE ticket_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, ticket_id);
             pstmt.executeUpdate();
