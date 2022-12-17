@@ -1,6 +1,7 @@
 package com.revature.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.exceptions.UsernameTaken;
 import com.revature.persistence.UserDao;
 import com.revature.pojos.User;
 import com.revature.service.UserService;
@@ -28,9 +29,8 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Set<User> users = service.getAllUsers();
         String json = mapper.writeValueAsString(users);
-        //resp.setStatus(200);
         resp.getWriter().println(json);
-
+        resp.setStatus(200);
     }
 
     //creates a new user in database
@@ -46,7 +46,12 @@ public class UserServlet extends HttpServlet {
 
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.readValue(jsonBuilder.toString(), User.class);
-        service.registerNewUser(user);
+        try {
+            service.registerNewUser(user);
+        } catch (UsernameTaken e) {
+            resp.getWriter().print("Username already taken");
+            resp.setStatus(401);
+        }
 
         System.out.println(user);
 

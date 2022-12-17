@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.revature.exceptions.UsernameTaken;
 import com.revature.pojos.Ticket;
 import com.revature.pojos.User;
 import com.revature.exceptions.IncorrectPasswordException;
@@ -17,7 +18,7 @@ public class UserDao {
         this.connection = ConnectionManager.getConnection();
     }
 
-    public void create(User user){
+    public void create(User user) throws UsernameTaken {
         String sql = "INSERT INTO users (first_name, last_name, username, \"password\", is_manager) VALUES (?,?,?,?,?);";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -37,7 +38,7 @@ public class UserDao {
                 //System.out.println("User ID here "+ user.getUserId());
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new UsernameTaken("Username already taken!");
         }
     }
 
@@ -62,20 +63,49 @@ public class UserDao {
         }
 
     }
-    public void update(User user){
-        String sql = "UPDATE USERS SET first_name = ?, last_name = ?, username = ?, \"password\" = ? WHERE user_id = ?;";
+    public void update(User user) throws UsernameTaken {
+        String sql = "UPDATE USERS SET first_name = ?, last_name = ?, username = ?, \"password\" = ?, is_manager = ? WHERE user_id = ?;";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, user.getFirstName());
             pstmt.setString(2, user.getLastName());
             pstmt.setString(3, user.getUsername());
             pstmt.setString(4, user.getPassword());
-            pstmt.setInt(5, user.getUserId());
+            pstmt.setBoolean(5, user.getIsManager());
+            pstmt.setInt(6, user.getUserId());
             pstmt.executeUpdate();
+
+
         }catch (SQLException e){
-            throw new RuntimeException();
+            throw new UsernameTaken("Username already taken!");
         }
     }
+
+    public User getUser(Integer user_id) {
+        User user = new User();
+
+        try {
+            String sql = "SELECT * FROM users WHERE user_id = ?;";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, user_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                user.setUserId(rs.getInt("user_id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setIsManager(rs.getBoolean("is_manager"));
+            }
+            return user;
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public Set<User> getAllUsers(){
         String sql = "SELECT * FROM users";
@@ -84,8 +114,12 @@ public class UserDao {
             ResultSet rs = pstmt.executeQuery();
             Set<User> setUsers = new HashSet<>();
             while (rs.next()){
-                User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
-                        rs.getString("password"), rs.getBoolean("is_manager"));
+                User user = new User(rs.getInt("user_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getBoolean("is_manager"));
                 setUsers.add(user);
             }
             return setUsers;
@@ -94,6 +128,8 @@ public class UserDao {
         }
         return null;
     }
+
+
     public void delete(User user){
         String sql = "DELETE FROM users WHERE USER_ID = ?;";
         try {

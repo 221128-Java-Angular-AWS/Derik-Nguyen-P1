@@ -1,8 +1,11 @@
 package com.revature.persistence;
 
 import com.revature.pojos.Ticket;
+import com.revature.pojos.User;
 
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TicketDao {
     // DAOs are the objects where we implement the CRUD behavior
@@ -47,6 +50,7 @@ public class TicketDao {
                 ticket.setEmployeeId(rs.getInt("employee_id"));
                 ticket.setManagerId(rs.getInt("manager_id"));
                 ticket.setDescription(rs.getString("description"));
+                ticket.setRequestAmount(rs.getDouble("request_amount"));
                 ticket.setPendingStatus(rs.getBoolean("pending_status"));
                 ticket.setApproved(rs.getBoolean("approved"));
             }
@@ -58,6 +62,29 @@ public class TicketDao {
         return ticket;
     }
 
+    public Set<Ticket> getAllTickets(){
+        String sql = "SELECT * FROM tickets WHERE pending_status = TRUE";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            Set<Ticket> setTickets = new HashSet<>();
+            while (rs.next()){
+                Ticket ticket = new Ticket(rs.getInt("ticket_id"),
+                        rs.getInt("employee_id"),
+                        rs.getInt("manager_id"),
+                        rs.getString("description"),
+                        rs.getDouble("request_amount"),
+                        rs.getBoolean("pending_status"),
+                        rs.getBoolean("approved"));
+                        setTickets.add(ticket);
+            }
+            return setTickets;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void update(Ticket ticket) {
         //if statement to check if you are the manager to update
 
@@ -67,7 +94,7 @@ public class TicketDao {
             pstmt.setInt(2, ticket.getTicketId());
             pstmt.setBoolean(1, ticket.getApproved());
 
-            //pstmt.setBoolean(2, ticket.getPendingStatus());
+
 
 
             pstmt.executeUpdate();

@@ -26,6 +26,7 @@ public class TicketServlet extends HttpServlet {
 
     }
 
+    //gets information from a single ticket through ticketId
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = Integer.parseInt(req.getParameter("ticket_id"));
@@ -49,21 +50,8 @@ public class TicketServlet extends HttpServlet {
 
         resp.setStatus(201);
     }
-/*
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BufferedReader reader = req.getReader();
-        StringBuilder json = new StringBuilder();
-        while(reader.ready()) {
-            json.append(reader.readLine());
-        }
 
-        Ticket ticket = mapper.readValue(json.toString(), Ticket.class);
-        service.updateTicket(ticket);
 
-        resp.setStatus(201);
-    }
-*/
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = Integer.parseInt(req.getParameter("ticket_id"));

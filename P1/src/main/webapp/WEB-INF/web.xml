@@ -64,9 +64,18 @@
 
     <servlet-mapping>
         <servlet-name>TicketUpdateServlet</servlet-name>
-        <url-pattern>/update</url-pattern>
+        <url-pattern>/tupdate</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-class>com.revature.servlets.UserUpdateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <url-pattern>/uupdate</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 

@@ -1,10 +1,11 @@
 package com.revature.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.persistence.TicketDao;
+import com.revature.exceptions.UsernameTaken;
+import com.revature.persistence.UserDao;
 import com.revature.pojos.Ticket;
 import com.revature.pojos.User;
-import com.revature.service.TicketService;
+import com.revature.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,26 +15,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Set;
 
-public class TicketUpdateServlet extends HttpServlet {
-    private TicketService service;
+public class UserUpdateServlet  extends HttpServlet {
+
+    private UserService service;
     private ObjectMapper mapper;
 
-
-    @Override
     public void init() throws ServletException {
-        this.service = new TicketService(new TicketDao());
+        this.service = new UserService(new UserDao());
         this.mapper = new ObjectMapper();
 
 
     }
 
+    //Get a single user
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Set<Ticket> tickets = service.getAllTickets();
-        String json = mapper.writeValueAsString(tickets);
+        Integer id = Integer.parseInt(req.getParameter("user_id"));
+        User user = service.getUser(id);
+        String json = mapper.writeValueAsString(user);
         resp.getWriter().println(json);
         resp.setStatus(200);
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,8 +47,13 @@ public class TicketUpdateServlet extends HttpServlet {
             json.append(reader.readLine());
         }
 
-        Ticket ticket = mapper.readValue(json.toString(), Ticket.class);
-        service.updateTicket(ticket);
+        User user = mapper.readValue(json.toString(), User.class);
+        try {
+            service.update(user);
+        } catch (UsernameTaken e) {
+            resp.getWriter().print("Username already taken");
+            resp.setStatus(401);
+        }
 
         resp.setStatus(201);
     }

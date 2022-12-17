@@ -2,6 +2,9 @@ package com.revature.service;
 
 import com.revature.persistence.TicketDao;
 import com.revature.pojos.Ticket;
+import com.revature.pojos.User;
+
+import java.util.Set;
 
 public class TicketService {
         private TicketDao dao;
@@ -17,6 +20,10 @@ public class TicketService {
         public Ticket getTicket(Integer ticketId) {
             return dao.read(ticketId);
         }
+
+        public Set<Ticket> getAllTickets() {
+        return dao.getAllTickets();
+    }
 
         public void updateTicket(Ticket ticket) {
             dao.update(ticket);
