@@ -64,8 +64,9 @@ public class TicketDao {
         try {
             String sql = "UPDATE tickets SET approved = ?, pending_status = DEFAULT WHERE ticket_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setBoolean(1, ticket.getApproved());
             pstmt.setInt(2, ticket.getTicketId());
+            pstmt.setBoolean(1, ticket.getApproved());
+
             //pstmt.setBoolean(2, ticket.getPendingStatus());
 
 

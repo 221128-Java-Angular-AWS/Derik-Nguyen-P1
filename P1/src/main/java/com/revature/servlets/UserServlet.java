@@ -23,7 +23,7 @@ public class UserServlet extends HttpServlet {
         this.mapper = new ObjectMapper();
     }
 
-
+    //Gets all users in database
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Set<User> users = service.getAllUsers();
@@ -33,7 +33,7 @@ public class UserServlet extends HttpServlet {
 
     }
 
-
+    //creates a new user in database
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StringBuilder jsonBuilder = new StringBuilder();

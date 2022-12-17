@@ -12,7 +12,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Set;
 
 public class AuthenticateServlet extends HttpServlet {
 
@@ -26,21 +28,30 @@ public class AuthenticateServlet extends HttpServlet {
     }
 
 
-    //authenticate is throwing a 500 error
+    //authenticate username
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = mapper.readValue(req.getInputStream(), User.class);
+        BufferedReader reader = req.getReader();
+        StringBuilder json = new StringBuilder();
+        while(reader.ready()) {
+            json.append(reader.readLine());
+        }
+
+        User user = mapper.readValue(json.toString(), User.class);
         try {
             User authenticatedUser = service.authenticate(user);
             resp.setStatus(200);
             resp.getWriter().println(mapper.writeValueAsString(authenticatedUser));
-            Cookie authCookie = new Cookie("user_id", user.getUserId().toString());
+            Cookie authCookie = new Cookie("userId", user.getUserId().toString());
 
-        } catch (UserNotFoundException e) {
+        } catch(UserNotFoundException e) {
+            resp.getWriter().print("Username not recognized");
             resp.setStatus(401);
-        } catch (IncorrectPasswordException e) {
+        } catch(IncorrectPasswordException e) {
+            resp.getWriter().print("Wrong password");
             resp.setStatus(401);
         }
+
 
 
     }

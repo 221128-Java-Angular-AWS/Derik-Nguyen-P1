@@ -46,14 +46,14 @@ public class UserDao {
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, username);
-
             ResultSet rs = pstmt.executeQuery();
+
             if(!rs.next()){
                 throw new UserNotFoundException("This username does not exist in our database");
             }
             User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
                     rs.getString("password"), rs.getBoolean("is_manager"));
-            if (password.equals(user.getPassword())){
+            if (user.getPassword().equals(password)){
                 return user;
             }
             throw new IncorrectPasswordException("The password is not correct.");

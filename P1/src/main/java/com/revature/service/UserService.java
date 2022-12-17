@@ -21,14 +21,12 @@ public class UserService {
         return dao.getAllUsers();
     }
 
-    public User authenticate(String username, String password) throws UserNotFoundException, IncorrectPasswordException {
-        return dao.authenticate(username, password);
-    }
-
     public User authenticate(User user) throws UserNotFoundException, IncorrectPasswordException {
         return dao.authenticate(user.getUsername(), user.getPassword());
     }
 
+    public User authenticateUser(String username, String password) throws UserNotFoundException, IncorrectPasswordException {
+        return dao.authenticate(username, password); }
 
     public void update(User user) {
         dao.update(user);
