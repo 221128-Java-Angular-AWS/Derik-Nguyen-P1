@@ -3,7 +3,6 @@ package com.revature.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.exceptions.UsernameTaken;
 import com.revature.persistence.UserDao;
-import com.revature.pojos.Ticket;
 import com.revature.pojos.User;
 import com.revature.service.UserService;
 
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Set;
+
 
 public class UserUpdateServlet  extends HttpServlet {
 
@@ -38,7 +37,7 @@ public class UserUpdateServlet  extends HttpServlet {
     }
 
 
-
+    //Updates a user
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();

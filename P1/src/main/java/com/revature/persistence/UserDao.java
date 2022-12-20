@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.revature.exceptions.UsernameTaken;
-import com.revature.pojos.Ticket;
 import com.revature.pojos.User;
 import com.revature.exceptions.IncorrectPasswordException;
 import com.revature.exceptions.UserNotFoundException;
@@ -21,7 +20,7 @@ public class UserDao {
     public void create(User user) throws UsernameTaken {
         String sql = "INSERT INTO users (first_name, last_name, username, \"password\", is_manager) VALUES (?,?,?,?,?);";
         try {
-            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, user.getFirstName());
             pstmt.setString(2, user.getLastName());
             pstmt.setString(3, user.getUsername());
@@ -30,13 +29,7 @@ public class UserDao {
 
             pstmt.executeUpdate();
 
-            //resultset returns generated keys from SQL
-            ResultSet rs = pstmt.getGeneratedKeys();
 
-            if(rs.next()){
-                user.setUserId(rs.getInt("user_id"));
-                //System.out.println("User ID here "+ user.getUserId());
-            }
         } catch (SQLException e) {
             throw new UsernameTaken("Username already taken!");
         }
@@ -52,8 +45,12 @@ public class UserDao {
             if(!rs.next()){
                 throw new UserNotFoundException("This username does not exist in our database");
             }
-            User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"),
-                    rs.getString("password"), rs.getBoolean("is_manager"));
+            User user = new User(rs.getInt("user_id"),
+                    rs.getString("first_name"),
+                    rs.getString("last_name"),
+                    rs.getString("username"),
+                    rs.getString("password"),
+                    rs.getBoolean("is_manager"));
             if (user.getPassword().equals(password)){
                 return user;
             }
@@ -98,21 +95,23 @@ public class UserDao {
                 user.setPassword(rs.getString("password"));
                 user.setIsManager(rs.getBoolean("is_manager"));
             }
-            return user;
+
         } catch(SQLException e){
             e.printStackTrace();
         }
 
-        return null;
+        return user;
     }
 
 
     public Set<User> getAllUsers(){
         String sql = "SELECT * FROM users";
+        Set<User> setUsers = new HashSet<>();
+
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
-            Set<User> setUsers = new HashSet<>();
+
             while (rs.next()){
                 User user = new User(rs.getInt("user_id"),
                         rs.getString("first_name"),
@@ -122,11 +121,11 @@ public class UserDao {
                         rs.getBoolean("is_manager"));
                 setUsers.add(user);
             }
-            return setUsers;
+
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return setUsers;
     }
 
 

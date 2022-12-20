@@ -42,7 +42,8 @@ public class AuthenticateServlet extends HttpServlet {
             User authenticatedUser = service.authenticate(user);
             resp.setStatus(200);
             resp.getWriter().println(mapper.writeValueAsString(authenticatedUser));
-            Cookie authCookie = new Cookie("userId", user.getUserId().toString());
+            //Cookie authCookie = new Cookie("userId", user.getUserId().toString());
+            //resp.addCookie(authCookie);
 
         } catch(UserNotFoundException e) {
             resp.getWriter().print("Username not recognized");

@@ -1,11 +1,12 @@
 package com.revature.persistence;
 
 import com.revature.pojos.Ticket;
-import com.revature.pojos.User;
+
 
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
+
 
 public class TicketDao {
     // DAOs are the objects where we implement the CRUD behavior
@@ -20,16 +21,17 @@ public class TicketDao {
 
     public void create(Ticket ticket) {
         try {
-            String sql = "INSERT INTO tickets (employee_id, manager_id, description, request_amount, pending_status) VALUES (?,?,?,?,?);";
+            String sql = "INSERT INTO tickets (employee_id, manager_id, description, request_amount, pending_status) VALUES (?,?,?,?,TRUE);";
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, ticket.getEmployeeId());
             pstmt.setInt(2, ticket.getManagerId());
             pstmt.setString(3, ticket.getDescription());
             pstmt.setDouble(4, ticket.getRequestAmount());
-            pstmt.setBoolean(5, ticket.getPendingStatus());
-
+            //pstmt.setBoolean(5, ticket.getPendingStatus());
 
             pstmt.executeUpdate();
+
+
 
         } catch(SQLException e){
             e.printStackTrace();
@@ -64,10 +66,12 @@ public class TicketDao {
 
     public Set<Ticket> getAllTickets(){
         String sql = "SELECT * FROM tickets WHERE pending_status = TRUE";
+        Set<Ticket> setTickets = new HashSet<>();
+
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
-            Set<Ticket> setTickets = new HashSet<>();
+
             while (rs.next()){
                 Ticket ticket = new Ticket(rs.getInt("ticket_id"),
                         rs.getInt("employee_id"),
@@ -78,11 +82,11 @@ public class TicketDao {
                         rs.getBoolean("approved"));
                         setTickets.add(ticket);
             }
-            return setTickets;
+
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return setTickets;
     }
 
     public void update(Ticket ticket) {

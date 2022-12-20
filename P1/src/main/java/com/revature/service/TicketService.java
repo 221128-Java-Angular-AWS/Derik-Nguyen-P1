@@ -5,6 +5,7 @@ import com.revature.pojos.Ticket;
 import com.revature.pojos.User;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 public class TicketService {
         private TicketDao dao;

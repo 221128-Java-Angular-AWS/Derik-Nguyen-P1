@@ -27,6 +27,7 @@ public class TicketUpdateServlet extends HttpServlet {
 
     }
 
+    //gets all the tickets that are still pending
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Set<Ticket> tickets = service.getAllTickets();
@@ -35,6 +36,7 @@ public class TicketUpdateServlet extends HttpServlet {
         resp.setStatus(200);
     }
 
+    //updates a single ticket
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();

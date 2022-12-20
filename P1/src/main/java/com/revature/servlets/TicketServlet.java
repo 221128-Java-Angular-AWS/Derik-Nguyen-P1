@@ -37,6 +37,7 @@ public class TicketServlet extends HttpServlet {
         resp.setStatus(200);
     }
 
+    //creates a new ticket
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
