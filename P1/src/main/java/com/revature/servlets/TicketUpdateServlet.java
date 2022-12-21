@@ -46,7 +46,7 @@ public class TicketUpdateServlet extends HttpServlet {
 
     //updates a single ticket
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
         StringBuilder json = new StringBuilder();
         StringBuilder json2 = new StringBuilder();
