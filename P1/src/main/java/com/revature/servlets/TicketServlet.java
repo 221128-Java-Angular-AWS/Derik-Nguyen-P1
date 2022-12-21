@@ -3,7 +3,6 @@ package com.revature.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.persistence.TicketDao;
 import com.revature.pojos.Ticket;
-import com.revature.pojos.User;
 import com.revature.service.TicketService;
 
 import javax.servlet.ServletException;
@@ -16,13 +15,13 @@ import java.io.IOException;
 public class TicketServlet extends HttpServlet {
     private TicketService service;
     private ObjectMapper mapper;
-    //private StringBuilder jsonBuilder;
+
 
     @Override
     public void init() throws ServletException {
         this.service = new TicketService(new TicketDao());
         this.mapper = new ObjectMapper();
-        //this.jsonBuilder = new StringBuilder();
+
 
     }
 

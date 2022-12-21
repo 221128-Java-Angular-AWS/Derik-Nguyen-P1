@@ -11,7 +11,7 @@ public class DependencyLoaderListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        //new UserService(new UserDao());
+
     }
 
     @Override

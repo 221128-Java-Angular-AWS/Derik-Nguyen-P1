@@ -11,7 +11,11 @@ import java.util.Set;
 public class TicketDao {
     // DAOs are the objects where we implement the CRUD behavior
     //in order to invoke various CRUD operations in the persistence layer, we need to start the behavior,
-    //the flow of execution, in the web API layer, access a service layer class, and finally access the DAO.
+    //the flow of execution, in the web API layer, access a servlet layer class,
+    // creating a POJO or model in the servlet layer class
+    // access a service layer class, and finally access the DAO
+    // passing our POJOs through the layers
+
 
     private Connection connection;
 
@@ -90,7 +94,7 @@ public class TicketDao {
     }
 
     public void update(Ticket ticket) {
-        //if statement to check if you are the manager to update
+
 
         try {
             String sql = "UPDATE tickets SET approved = ?, pending_status = DEFAULT WHERE ticket_id = ?;";

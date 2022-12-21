@@ -1,6 +1,6 @@
 package com.revature.pojos;
 
-import java.util.HashMap;
+
 import java.util.Objects;
 public class User {
     private Integer userId;
@@ -10,7 +10,7 @@ public class User {
     private String password;
     private Boolean isManager;
 
-    //private String time_created;
+
     //no args: constructor:
     public User(){
     }

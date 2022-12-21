@@ -1,6 +1,6 @@
 package com.revature.pojos;
 
-import java.util.Objects;
+
 public class Ticket {
 
     private Integer ticketId;
